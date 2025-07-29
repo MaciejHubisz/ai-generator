@@ -11,7 +11,7 @@ extends:
 
 prompt: |
   {{ base_prompt }}
-  {{ output_format }}
+  
 
   Context:
   {{ service_context }}
@@ -25,7 +25,6 @@ prompt: |
   - Use proper package structure based on `PACKAGE` if available.
   - Methods must match their expected return types.
 
-  Output only code using file format sections.
 
 variables:
   - name: text

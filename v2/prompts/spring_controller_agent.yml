@@ -11,7 +11,7 @@ extends:
 
 prompt: |
   {{ base_prompt }}
-  {{ output_format }}
+  
 
   OpenAPI specification:
   {{ openapi_controller }}

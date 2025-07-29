@@ -1,0 +1,50 @@
+name: junit_single_agent
+description: Junits single agent
+version: 1
+author: Unknown
+created: 2025-07-29
+updated: 2025-07-29
+
+extends:
+  - base.yml
+  - output_format.yml
+
+prompt: |
+  {{ base_prompt }}
+
+  You are a senior Java developer writing clean, idiomatic JUnit 5 tests for Spring Boot.
+
+  OBJECTIVE:
+  Analyze the following class and generate a unit or integration test that matches its behavior.
+
+  SOURCE:
+  ### FILE: {{ file_path }}
+  {{ file_content }}
+
+  RULES:
+  - Output exactly one test file
+  - Use appropriate annotations (e.g. @WebMvcTest, @DataJpaTest, @MockBean, etc.)
+  - Follow Spring conventions
+  - Do not generate explanations — only test code
+
+
+
+  FORMAT:
+  ### BEGIN FILE: <path/to/TestFile.java>
+  <test content>
+  ### END FILE
+
+
+
+variables:
+  - name: text
+    description: Input text for the prompt
+    required: true
+
+metadata:
+  recommended_models: []
+  token_estimate:
+    input_multiplier: 1.0
+    base_tokens: 0
+
+history: []

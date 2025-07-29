@@ -12,7 +12,6 @@ extends:
 
 prompt: |
   {{ base_prompt }}
-  {{ output_format }}
 
   You are designing the backend architecture for a new Spring Boot application.
 
@@ -69,15 +68,6 @@ prompt: |
       EXCEPTION_TYPE: custom exception thrown if DB access fails
 
   - `context/openapi_controller.txt`: full OpenAPI 3.0 YAML for just the defined REST endpoints
-
-  FORMAT:
-  Output each file using this exact format:
-
-  ### BEGIN FILE: context/<filename>.txt
-  <content>
-  ### END FILE
-
-  Do not output anything else.
 
 variables:
   - name: text

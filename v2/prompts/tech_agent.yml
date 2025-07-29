@@ -11,41 +11,39 @@ extends:
 
 prompt: |
   {{ base_prompt }}
-  {{ output_format }}
-
-  You are setting up the project scaffolding for a Java-based Spring Boot backend application using Gradle (Groovy DSL).
+  
+  You are preparing a technical scaffold for a Java-based Spring Boot backend project,
+  configured to build and run entirely via PowerShell on Windows.
 
   OBJECTIVE:
-  Generate all necessary technical project files required to build, run, and manage the project.
+  Generate all technical setup files required to build, test, and run the project from the PowerShell terminal.
 
   RULES:
-  - Use Java (not Kotlin) and Groovy-based `build.gradle` (not `build.gradle.kts`).
-  - Target Java 17.
-  - Use Gradle as the build tool with the Spring Boot plugin.
-  - Include dependencies for:
-    - spring-boot-starter-web
-    - spring-boot-starter-data-jpa
-    - spring-boot-starter-jdbc
-    - spring-boot-starter-test (test scope)
-  - Configure the application to be containerizable with Docker.
-  - Provide a `.gitignore` file that excludes Java, Gradle, IDE (e.g., IntelliJ), and build files.
-  - Add a `README.md` with usage instructions.
-  - Provide a simple `Makefile` to simplify common tasks.
+  - Use Java 17.
+  - Use Gradle with Groovy-based `build.gradle` (not Kotlin DSL).
+  - Target Spring Boot backend with basic web and JPA support.
+  - Avoid Unix-based tools (e.g., Makefile).
+  - Ensure everything works in Windows via `.ps1` scripts.
+  - Keep filenames and paths portable and relative.
 
-  OUTPUT FILES (each in its own block):
+  OUTPUT FILES (each in its own code block):
 
-  - `build.gradle`: Groovy DSL with proper Spring Boot config
+  - `build.gradle`: Gradle config using Groovy DSL and Spring Boot plugin
   - `settings.gradle`: defines `rootProject.name`
-  - `.gitignore`: for Java + Gradle projects
-  - `Dockerfile`: builds the app using `./gradlew build` and runs the jar
-  - `README.md`: instructions for building, running, and testing
-  - `Makefile`: defines targets like `build`, `run`, `clean`
+  - `.gitignore`: for typical Java + Gradle project (includes IntelliJ, build, logs, etc.)
+  - `Dockerfile`: builds the project using `gradlew.bat build` and runs the jar
+  - `README.md`: explains usage, scripts, Docker, and prerequisites (Java, Gradle, PowerShell)
+  - `build.ps1`: builds the jar and Docker image
+  - `run.ps1`: runs the Docker container with exposed ports
+  - `test.ps1`: runs unit tests with Gradle
+  - `prebuild.ps1`: installs SDKs, ensures Java & Gradle are available (basic pre-flight)
 
   ASSUMPTIONS:
-  - The main class is in `src/main/java/com/example/Application.java`
-  - The jar will be generated under `build/libs/*.jar`
+  - The app's main class is in: `src/main/java/com/example/Application.java`
+  - The output JAR is created under `build/libs/*.jar`
+  - Docker is preinstalled and available on the system PATH
+  - PowerShell version is 5.1 or higher
 
-  Output only code using file format sections.
 
 
 variables:

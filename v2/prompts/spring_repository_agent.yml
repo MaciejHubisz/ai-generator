@@ -11,7 +11,7 @@ extends:
 
 prompt: |
   {{ base_prompt }}
-  {{ output_format }}
+  
 
   Context:
   {{ repository_context }}
@@ -25,7 +25,6 @@ prompt: |
   - Follow Spring idioms for repository beans (`@Repository`, constructor injection).
   - You must output the full code file.
 
-  Output only code using file format sections.
 
 variables:
   - name: text

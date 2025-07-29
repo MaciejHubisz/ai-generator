@@ -12,7 +12,7 @@ AGENTS = {
     "spring_service_agent": "prompts/spring_service_agent.yml",
     "spring_repository_agent": "prompts/spring_repository_agent.yml",
     "tech_agent": "prompts/tech_agent.yml",
-
+    "junit_single_agent": "prompts/junit_single_agent.yml"
 }
 
 PROMPT_VERSION = "0.0.1"

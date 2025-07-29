@@ -1,0 +1,39 @@
+name: springboot_agent
+description: Springboot agent
+version: 1
+author: Unknown
+created: 2025-07-29
+updated: 2025-07-29
+
+extends:
+  - base.yml
+  - output_format.yml
+
+prompt: |
+  {{ base_prompt }}
+  {{ output_format }}
+
+  Using the following context:
+  {{ springboot_context }}
+
+  Generate:
+  1. Main Spring Boot application class in `{{ PACKAGE }}` package.
+  2. Configuration class with `@Configuration` in `{{ CONFIG_PACKAGE }}`.
+  3. `application.properties` file with listed properties.
+
+  Rules:
+  - Use correct Java packaging paths.
+  - Follow formatting and structure rules.
+
+variables:
+  - name: text
+    description: Input text for the prompt
+    required: true
+
+metadata:
+  recommended_models: []
+  token_estimate:
+    input_multiplier: 1.0
+    base_tokens: 0
+
+history: []

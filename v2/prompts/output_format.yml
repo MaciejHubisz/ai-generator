@@ -1,0 +1,33 @@
+name: output_format
+description: Output format
+version: 1
+author: Unknown
+created: 2025-07-29
+updated: 2025-07-29
+
+
+prompt: |
+  Respond using only this format per file:
+
+  ### BEGIN FILE: <relative/path/to/file>
+  <file content here>
+  ### END FILE
+
+  Do not add any text, bullet points, or explanations.
+  - Java sources go in: src/main/java/com/example/demo/...
+  - Config files (e.g. properties) go in: src/main/resources/...
+
+  Do not add any explanations, just the file sections.
+
+variables:
+  - name: text
+    description: Input text for the prompt
+    required: true
+
+metadata:
+  recommended_models: [ ]
+  token_estimate:
+    input_multiplier: 1.0
+    base_tokens: 0
+
+history: [ ]

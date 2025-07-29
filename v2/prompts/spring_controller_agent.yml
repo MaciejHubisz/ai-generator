@@ -1,0 +1,42 @@
+name: spring_controller_agent
+description: Spring controller agent
+version: 1
+author: Unknown
+created: 2025-07-29
+updated: 2025-07-29
+
+extends:
+  - base.yml
+  - output_format.yml
+
+prompt: |
+  {{ base_prompt }}
+  {{ output_format }}
+
+  OpenAPI specification:
+  {{ openapi_controller }}
+
+  Using the following context:
+  {{ controller_context }}
+
+  Generate a Spring Boot controller class using the above OpenAPI specification.
+
+  - Each endpoint must match the spec exactly.
+  - Use Spring annotations like @RestController, @GetMapping, etc.
+  - Return `ResponseEntity<...>` and use appropriate HTTP response codes.
+  - Place the controller in the `{{ PACKAGE }}` package.
+
+  Output only code using file section format.
+
+variables:
+  - name: text
+    description: Input text for the prompt
+    required: true
+
+metadata:
+  recommended_models: []
+  token_estimate:
+    input_multiplier: 1.0
+    base_tokens: 0
+
+history: []

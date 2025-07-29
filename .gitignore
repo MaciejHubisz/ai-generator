@@ -1,0 +1,4 @@
+/v2/cache/
+/v2/generated/
+/.env
+.idea/*

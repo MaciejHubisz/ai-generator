@@ -1,0 +1,24 @@
+name: base
+description: Test base
+version: 1
+author: Unknown
+created: 2025-07-29
+updated: 2025-07-29
+
+prompt: |
+  You are a senior Java backend developer.
+  Your job is to produce clean, idiomatic, production-ready Java code.
+  Always respect proper structure, formatting, and conventions.
+
+variables:
+  - name: text
+    description: Input text for the prompt
+    required: true
+
+metadata:
+  recommended_models: []
+  token_estimate:
+    input_multiplier: 1.0
+    base_tokens: 0
+
+history: []

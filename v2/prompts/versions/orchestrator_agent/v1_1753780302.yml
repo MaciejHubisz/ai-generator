@@ -1,0 +1,23 @@
+name: orchestrator_agent
+description: Orchestrator agent
+version: 1
+author: Unknown
+created: 2025-07-29
+updated: 2025-07-29
+
+prompt: |
+  # Your prompt template
+  {text}
+
+variables:
+  - name: text
+    description: Input text for the prompt
+    required: true
+
+metadata:
+  recommended_models: []
+  token_estimate:
+    input_multiplier: 1.0
+    base_tokens: 0
+
+history: []

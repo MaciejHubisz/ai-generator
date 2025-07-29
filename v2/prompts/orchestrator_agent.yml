@@ -1,0 +1,73 @@
+name: orchestrator_agent
+description: Orchestrator agent
+version: 1
+author: Unknown
+created: 2025-07-29
+updated: 2025-07-29
+
+extends:
+  - base.yml
+  - output_format.yml
+
+prompt: |
+  {{ base_prompt }}
+  {{ output_format }}
+
+  You are designing the backend architecture for a new Spring Boot application.
+
+  OBJECTIVE:
+  Create a full context for generating a backend that only exposes the following endpoint(s):
+
+  - `GET /healthcheck` — should return a 200 OK with a static health message.
+
+  RULES:
+  - Only include the exact endpoints listed above.
+  - Do not add other REST endpoints, features, or services.
+  - Use conventional Java package naming and Spring Boot structure.
+  - You must generate:
+    1. Spring Boot app structure (main class, config, and properties)
+    2. A controller context that defines what controller(s) to generate
+    3. A service context that defines the classes and method(s) the controller will delegate to
+    4. An OpenAPI YAML spec describing the defined REST API (not more!)
+
+  OUTPUT FILES (using ### BEGIN FILE: path):
+
+  - `context/springboot_context.txt`:
+      PACKAGE: base package for the app (e.g., com.example.health)
+      CONFIG_PACKAGE: where to put @Configuration classes
+      MAIN_CLASS: name of the Spring Boot app class
+      PROPERTIES: key=value Spring Boot config entries
+
+  - `context/controller_context.txt`:
+      PACKAGE: where controller classes will be placed
+      ENDPOINTS: list of endpoint definitions (e.g., GET /healthcheck)
+      SERVICE_CALLS: controller → service method mapping (e.g., HealthService.getStatus())
+
+  - `context/service_context.txt`:
+      PACKAGE: where service classes will be placed
+      SERVICE_CLASSES: name(s) of service classes
+      METHODS: for each service, what methods exist with signatures, return types, and descriptions
+
+  - `context/openapi_controller.txt`: full OpenAPI 3.0 YAML for just these endpoints
+
+  FORMAT:
+  Output each file using this exact format:
+  
+  ### BEGIN FILE: context/<filename>.txt
+  <content>
+  ### END FILE
+
+  Do not output anything else.
+
+variables:
+  - name: text
+    description: Input text for the prompt
+    required: true
+
+metadata:
+  recommended_models: []
+  token_estimate:
+    input_multiplier: 1.0
+    base_tokens: 0
+
+history: []

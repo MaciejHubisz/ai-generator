@@ -1,0 +1,41 @@
+name: spring_service_agent
+description: Spring service agent
+version: 1
+author: Unknown
+created: 2025-07-29
+updated: 2025-07-29
+
+extends:
+  - base.yml
+  - output_format.yml
+
+prompt: |
+  {{ base_prompt }}
+  {{ output_format }}
+
+  Context:
+  {{ service_context }}
+
+  Generate Java service class implementations.
+
+  Rules:
+  - Each service class listed in `SERVICE_CLASSES` must be generated.
+  - Each method listed in `METHODS` must be implemented inside the correct service.
+  - Follow Spring conventions (annotate with `@Service`).
+  - Use proper package structure based on `PACKAGE` if available.
+  - Methods must match their expected return types.
+
+  Output only code using file format sections.
+
+variables:
+  - name: text
+    description: Input text for the prompt
+    required: true
+
+metadata:
+  recommended_models: []
+  token_estimate:
+    input_multiplier: 1.0
+    base_tokens: 0
+
+history: []

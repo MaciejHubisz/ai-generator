@@ -1,0 +1,7 @@
+openai
+requests~=2.32.4
+promptpilot-cli
+python-dotenv~=1.1.1
+tenacity~=9.1.2
+cachetools~=6.1.0
+PyYAML~=6.0.2

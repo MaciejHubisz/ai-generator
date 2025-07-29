@@ -18,19 +18,20 @@ prompt: |
   OBJECTIVE:
   Create a full context for generating a backend that only exposes the following endpoint(s):
 
-  - `GET /healthcheck` — should return a 200 OK with a static health message.
+  - `GET /healthcheck` — should return a 200 OK with a health message, only if the database is reachable.
 
   RULES:
-  - Only include the exact endpoints listed above.
+  - Only include the exact endpoint listed above.
   - Do not add other REST endpoints, features, or services.
   - Use conventional Java package naming and Spring Boot structure.
-  - You must generate:
-    1. Spring Boot app structure (main class, config, and properties)
-    2. A controller context that defines what controller(s) to generate
-    3. A service context that defines the classes and method(s) the controller will delegate to
-    4. An OpenAPI YAML spec describing the defined REST API (not more!)
+  - The application must follow layered architecture: Controller → Service → Repository.
+  - The Repository must attempt a real DB query (e.g., `SELECT 1`) to verify connectivity.
+  - The Service must catch the repository-level exception and throw its own custom exception.
+  - Custom exception must be generic e.g. BusinessException, but find better generic name
+  - The Controller must handle the service-level exception and return a meaningful HTTP error using `ResponseEntity`.
+  - Exceptions must be clearly named and described for each layer.
 
-  OUTPUT FILES (using ### BEGIN FILE: path):
+  You must generate the following context files:
 
   - `context/springboot_context.txt`:
       PACKAGE: base package for the app (e.g., com.example.health)
@@ -41,18 +42,31 @@ prompt: |
   - `context/controller_context.txt`:
       PACKAGE: where controller classes will be placed
       ENDPOINTS: list of endpoint definitions (e.g., GET /healthcheck)
-      SERVICE_CALLS: controller → service method mapping (e.g., HealthService.getStatus())
+      SERVICE_CALLS: controller → service method mapping (e.g., HealthService.checkHealth())
+      EXCEPTION_HANDLING:
+        - Which exception(s) controller handles
+        - How to map exceptions to HTTP responses using ResponseEntity
 
   - `context/service_context.txt`:
       PACKAGE: where service classes will be placed
       SERVICE_CLASSES: name(s) of service classes
       METHODS: for each service, what methods exist with signatures, return types, and descriptions
+      REPOSITORY_CALLS: what repository method(s) the service invokes
+      EXCEPTION_HANDLING:
+        - Which repository exceptions are caught
+        - What custom exception the service throws in response
 
-  - `context/openapi_controller.txt`: full OpenAPI 3.0 YAML for just these endpoints
+  - `context/repository_context.txt`:
+      PACKAGE: where repository classes will be placed
+      CHECK_METHOD: method signature for verifying DB connection (e.g., boolean pingDatabase())
+      IMPLEMENTATION_HINT: how to implement DB check (e.g., using JdbcTemplate.queryForObject)
+      EXCEPTION_TYPE: custom exception thrown if DB connection check fails
+
+  - `context/openapi_controller.txt`: full OpenAPI 3.0 YAML for just the defined REST endpoint
 
   FORMAT:
   Output each file using this exact format:
-  
+
   ### BEGIN FILE: context/<filename>.txt
   <content>
   ### END FILE

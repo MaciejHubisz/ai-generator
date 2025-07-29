@@ -10,6 +10,7 @@ AGENTS = {
     "springboot_agent": "prompts/springboot_agent.yml",
     "spring_controller_agent": "prompts/spring_controller_agent.yml",
     "spring_service_agent": "prompts/spring_service_agent.yml",
+    "spring_repository_agent": "prompts/spring_repository_agent.yml",
 
 }
 

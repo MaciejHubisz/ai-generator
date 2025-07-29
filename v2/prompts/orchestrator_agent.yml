@@ -5,6 +5,7 @@ author: Unknown
 created: 2025-07-29
 updated: 2025-07-29
 
+
 extends:
   - base.yml
   - output_format.yml
@@ -19,15 +20,18 @@ prompt: |
   Create a full context for generating a backend that only exposes the following endpoint(s):
 
   - `GET /healthcheck` — should return a 200 OK with a health message, only if the database is reachable.
+  - `GET /auth` — request should contain basic auth and return 200 if checked on database that authenticated user is admin or not
 
   RULES:
   - Only include the exact endpoint listed above.
   - Do not add other REST endpoints, features, or services.
   - Use conventional Java package naming and Spring Boot structure.
   - The application must follow layered architecture: Controller → Service → Repository.
+  - Each endpoint should have its own logically separated layers: controllers, services, and repositories must be modular and specific to the concern (e.g., HealthController vs AuthController).
+  - Do not group unrelated logic into shared service or repository classes — isolate `healthcheck` and `auth` into distinct layers.
   - The Repository must attempt a real DB query (e.g., `SELECT 1`) to verify connectivity.
   - The Service must catch the repository-level exception and throw its own custom exception.
-  - Custom exception must be generic e.g. BusinessException, but find better generic name
+  - Custom exception must be generic (e.g., `BusinessException`), but choose a better generic name if appropriate.
   - The Controller must handle the service-level exception and return a meaningful HTTP error using `ResponseEntity`.
   - Exceptions must be clearly named and described for each layer.
 
@@ -41,15 +45,15 @@ prompt: |
 
   - `context/controller_context.txt`:
       PACKAGE: where controller classes will be placed
-      ENDPOINTS: list of endpoint definitions (e.g., GET /healthcheck)
-      SERVICE_CALLS: controller → service method mapping (e.g., HealthService.checkHealth())
+      ENDPOINTS: list of endpoint definitions (e.g., GET /healthcheck, GET /auth)
+      SERVICE_CALLS: controller → service method mapping (e.g., HealthService.checkHealth(), AuthService.verifyUser())
       EXCEPTION_HANDLING:
         - Which exception(s) controller handles
         - How to map exceptions to HTTP responses using ResponseEntity
 
   - `context/service_context.txt`:
       PACKAGE: where service classes will be placed
-      SERVICE_CLASSES: name(s) of service classes
+      SERVICE_CLASSES: name(s) of service classes (distinct per feature)
       METHODS: for each service, what methods exist with signatures, return types, and descriptions
       REPOSITORY_CALLS: what repository method(s) the service invokes
       EXCEPTION_HANDLING:
@@ -58,11 +62,12 @@ prompt: |
 
   - `context/repository_context.txt`:
       PACKAGE: where repository classes will be placed
-      CHECK_METHOD: method signature for verifying DB connection (e.g., boolean pingDatabase())
-      IMPLEMENTATION_HINT: how to implement DB check (e.g., using JdbcTemplate.queryForObject)
-      EXCEPTION_TYPE: custom exception thrown if DB connection check fails
+      REPOSITORY_CLASSES: name(s) of repository classes (distinct per feature)
+      METHODS: what each repository class exposes (e.g., pingDatabase(), findUserByCredentials())
+      IMPLEMENTATION_HINTS: how to implement DB logic (e.g., using Spring Data JPA)
+      EXCEPTION_TYPE: custom exception thrown if DB access fails
 
-  - `context/openapi_controller.txt`: full OpenAPI 3.0 YAML for just the defined REST endpoint
+  - `context/openapi_controller.txt`: full OpenAPI 3.0 YAML for just the defined REST endpoints
 
   FORMAT:
   Output each file using this exact format:

@@ -1,0 +1,62 @@
+name: tech_agent
+description: Tech agent
+version: 1
+author: Unknown
+created: 2025-07-29
+updated: 2025-07-29
+
+extends:
+  - base.yml
+  - output_format.yml
+
+prompt: |
+  {{ base_prompt }}
+  {{ output_format }}
+
+  You are setting up the project scaffolding for a Java-based Spring Boot backend application using Gradle (Groovy DSL).
+
+  OBJECTIVE:
+  Generate all necessary technical project files required to build, run, and manage the project.
+
+  RULES:
+  - Use Java (not Kotlin) and Groovy-based `build.gradle` (not `build.gradle.kts`).
+  - Target Java 17.
+  - Use Gradle as the build tool with the Spring Boot plugin.
+  - Include dependencies for:
+    - spring-boot-starter-web
+    - spring-boot-starter-data-jpa
+    - spring-boot-starter-jdbc
+    - spring-boot-starter-test (test scope)
+  - Configure the application to be containerizable with Docker.
+  - Provide a `.gitignore` file that excludes Java, Gradle, IDE (e.g., IntelliJ), and build files.
+  - Add a `README.md` with usage instructions.
+  - Provide a simple `Makefile` to simplify common tasks.
+
+  OUTPUT FILES (each in its own block):
+
+  - `build.gradle`: Groovy DSL with proper Spring Boot config
+  - `settings.gradle`: defines `rootProject.name`
+  - `.gitignore`: for Java + Gradle projects
+  - `Dockerfile`: builds the app using `./gradlew build` and runs the jar
+  - `README.md`: instructions for building, running, and testing
+  - `Makefile`: defines targets like `build`, `run`, `clean`
+
+  ASSUMPTIONS:
+  - The main class is in `src/main/java/com/example/Application.java`
+  - The jar will be generated under `build/libs/*.jar`
+
+  Output only code using file format sections.
+
+
+variables:
+  - name: text
+    description: Input text for the prompt
+    required: true
+
+metadata:
+  recommended_models: []
+  token_estimate:
+    input_multiplier: 1.0
+    base_tokens: 0
+
+history: []

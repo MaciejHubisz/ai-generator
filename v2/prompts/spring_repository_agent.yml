@@ -19,21 +19,13 @@ prompt: |
   Generate Java service class implementations.
 
   OBJECTIVE:
-  - Create a repository class that implements the `pingDatabase()` method.
-  - Use JdbcTemplate to run a lightweight query (e.g., `SELECT 1`).
-  - If the DB call fails, throw the specified custom exception.
+  - Create a repository class(es) based on context requirements
+  - Use spring data features
   - Use proper package structure based on `PACKAGE` if available.
   - Follow Spring idioms for repository beans (`@Repository`, constructor injection).
   - You must output the full code file.
 
-  OUTPUT FORMAT:
-  Output a single file using the format:
-
-  ### BEGIN FILE: <path/to/file.java>
-  <code>
-  ### END FILE
-
-  Do not include any other text.
+  Output only code using file format sections.
 
 variables:
   - name: text

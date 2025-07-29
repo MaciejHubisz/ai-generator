@@ -21,6 +21,7 @@ prompt: |
 
   - `GET /healthcheck` — should return a 200 OK with a health message, only if the database is reachable.
   - `GET /auth` — request should contain basic auth and return 200 if checked on database that authenticated user is admin or not
+  - `PUT/POST /user` — request with parameter "email" to create new user by admin. 200 if request is sent by admin and if new user is created properly
 
   RULES:
   - Only include the exact endpoint listed above.
